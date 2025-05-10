@@ -1,7 +1,5 @@
-'use client';
-
-import { useState } from 'react';
-import { notFound } from 'next/navigation';
+import { useState } from "react";
+import { notFound } from "next/navigation";
 
 // This would come from your database in a real app
 const blogPosts = {
@@ -34,22 +32,24 @@ const initialComments: Comment[] = [
   {
     id: 1,
     name: "Sr. Aisha",
-    message: "JazakAllah khair for this beautiful reminder about the importance of knowledge in Islam. It's especially relevant for us university students.",
-    date: "May 9, 2025"
+    message:
+      "JazakAllah khair for this beautiful reminder about the importance of knowledge in Islam. It's especially relevant for us university students.",
+    date: "May 9, 2025",
   },
   {
     id: 2,
     name: "Br. Omar",
-    message: "This article really motivated me to balance my academic studies with Islamic learning. Would love to see more content like this!",
-    date: "May 10, 2025"
-  }
+    message:
+      "This article really motivated me to balance my academic studies with Islamic learning. Would love to see more content like this!",
+    date: "May 10, 2025",
+  },
 ];
 
 export default function BlogPost({ params }: { params: { slug: string } }) {
   const [likes, setLikes] = useState(42);
   const [comments, setComments] = useState(initialComments);
-  const [newComment, setNewComment] = useState('');
-  const [userName, setUserName] = useState('');
+  const [newComment, setNewComment] = useState("");
+  const [userName, setUserName] = useState("");
 
   const post = blogPosts[params.slug as keyof typeof blogPosts];
 
@@ -69,16 +69,16 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       id: comments.length + 1,
       name: userName,
       message: newComment,
-      date: new Date().toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      })
+      date: new Date().toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
     };
 
     setComments([comment, ...comments]);
-    setNewComment('');
-    setUserName('');
+    setNewComment("");
+    setUserName("");
   };
 
   return (
@@ -97,8 +97,11 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
 
         {/* Blog Content */}
         <div className="prose dark:prose-invert prose-lg max-w-none mb-12">
-          {post.content.split('\n\n').map((paragraph, index) => (
-            <p key={index} className="mb-6 text-gray-700 dark:text-gray-300 leading-relaxed">
+          {post.content.split("\n\n").map((paragraph, index) => (
+            <p
+              key={index}
+              className="mb-6 text-gray-700 dark:text-gray-300 leading-relaxed"
+            >
               {paragraph.trim()}
             </p>
           ))}
@@ -124,7 +127,10 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
           {/* Comment Form */}
           <form onSubmit={handleComment} className="mb-8 space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
                 Your Name
               </label>
               <input
@@ -138,7 +144,10 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
               />
             </div>
             <div>
-              <label htmlFor="comment" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label
+                htmlFor="comment"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
                 Your Comment
               </label>
               <textarea
