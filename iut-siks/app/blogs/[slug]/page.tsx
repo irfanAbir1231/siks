@@ -1,51 +1,8 @@
 "use client";
 import { useState } from "react";
 import { notFound } from "next/navigation";
-
-// This would come from your database in a real app
-const blogPosts = {
-  "importance-of-seeking-knowledge": {
-    title: "The Importance of Seeking Knowledge in Islam",
-    author: "Br. Abdullah Rahman",
-    date: "May 8, 2025",
-    content: `
-      Knowledge holds a special place in Islam. The first word revealed in the Quran was "Read" (Iqra), highlighting the significance of learning in our faith.
-
-      The Prophet Muhammad ﷺ emphasized the importance of seeking knowledge throughout his life. He said, "Seeking knowledge is mandatory for every Muslim." This hadith demonstrates that education isn't just a recommendation—it's an obligation.
-
-      In the modern world, this directive takes on new significance. As Muslim students, we must excel in both religious and worldly knowledge. This balanced approach allows us to better serve our communities and uphold our Islamic values in contemporary society.
-
-      The early Muslim scholars set remarkable examples in their pursuit of knowledge. They traveled vast distances, dedicated years to learning, and developed groundbreaking innovations in science, mathematics, and medicine—all while maintaining their spiritual connection with Allah.
-
-      Today, we continue this legacy. Whether studying engineering, medicine, or any other field, we approach our education as an act of worship, seeking to benefit humanity while earning Allah's pleasure.
-    `,
-  },
-};
-
-interface Comment {
-  id: number;
-  name: string;
-  message: string;
-  date: string;
-}
-
-const initialComments: Comment[] = [
-  {
-    id: 1,
-    name: "Sr. Aisha",
-    message:
-      "JazakAllah khair for this beautiful reminder about the importance of knowledge in Islam. It's especially relevant for us university students.",
-    date: "May 9, 2025",
-  },
-  {
-    id: 2,
-    name: "Br. Omar",
-    message:
-      "This article really motivated me to balance my academic studies with Islamic learning. Would love to see more content like this!",
-    date: "May 10, 2025",
-  },
-];
-
+// NOTE: Do not type the props here due to Next.js app dir PageProps bug.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function BlogPost(props: any) {
   const { params } = props;
   const [likes, setLikes] = useState(42);
