@@ -2,6 +2,10 @@
 import { useState } from "react";
 import { notFound } from "next/navigation";
 
+interface BlogPostPageProps {
+  params: { slug: string };
+}
+
 // This would come from your database in a real app
 const blogPosts = {
   "importance-of-seeking-knowledge": {
@@ -46,7 +50,7 @@ const initialComments: Comment[] = [
   },
 ];
 
-export default function BlogPost({ params }: any) {
+export default function BlogPost({ params }: BlogPostPageProps) {
   const [likes, setLikes] = useState(42);
   const [comments, setComments] = useState(initialComments);
   const [newComment, setNewComment] = useState("");
