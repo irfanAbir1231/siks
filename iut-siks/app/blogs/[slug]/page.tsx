@@ -45,7 +45,7 @@ const initialComments: Comment[] = [
   },
 ];
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
+export default function BlogPost({ params }: any) {
   const [likes, setLikes] = useState(42);
   const [comments, setComments] = useState(initialComments);
   const [newComment, setNewComment] = useState("");
