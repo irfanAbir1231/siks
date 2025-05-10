@@ -2,10 +2,6 @@
 import { useState } from "react";
 import { notFound } from "next/navigation";
 
-interface BlogPostPageProps {
-  params: { slug: string };
-}
-
 // This would come from your database in a real app
 const blogPosts = {
   "importance-of-seeking-knowledge": {
