@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.19.3",
     "bcrypt": "^6.0.0",
     "fs-extra": "^11.3.0",
     "mongoose": "^8.14.3",
