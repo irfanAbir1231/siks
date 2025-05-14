@@ -9,9 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< Updated upstream
     "bcrypt": "^6.0.0",
     "fs-extra": "^11.3.0",
     "mongoose": "^8.14.2",
+=======
+    "mongoose": "^8.14.3",
+>>>>>>> Stashed changes
     "next": "15.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -19,9 +23,12 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+<<<<<<< Updated upstream
     "@types/bcrypt": "^5.0.2",
     "@types/fs-extra": "^11.0.4",
     "@types/mongoose": "^5.11.96",
+=======
+>>>>>>> Stashed changes
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
