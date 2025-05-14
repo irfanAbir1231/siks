@@ -3,12 +3,15 @@
 import { useState, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SignInButton, SignUpButton, useAuth, useUser, SignOutButton } from '@clerk/nextjs';
 
 // Temporary auth state (replace with your auth solution)
 const isLoggedIn = false;
 const username = "Abdullah";
 
 export default function Navbar() {
+  const { isSignedIn } = useAuth();
+  const { user } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuAnim, setMenuAnim] = useState<null | "in" | "out">(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -59,11 +62,11 @@ export default function Navbar() {
 
             {/* Auth Buttons/Profile */}
             <div className="flex items-center ml-4 space-x-4">
-              {isLoggedIn ? (
+              {isSignedIn ? (
                 <div className="relative group">
                   <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-green-50 dark:hover:bg-green-900/30">
                     <span>👤</span>
-                    <span>{username}</span>
+                    <span>{user?.username || user?.firstName || "User"}</span>
                   </button>
                   {/* Dropdown Menu */}
                   <div className="absolute right-0 w-48 mt-2 py-2 bg-white dark:bg-gray-900 rounded-lg shadow-xl hidden group-hover:block border border-green-100 dark:border-green-900">
@@ -73,28 +76,27 @@ export default function Navbar() {
                     >
                       Profile
                     </Link>
-                    <button
-                      onClick={() => console.log("Logout clicked")}
-                      className="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
-                    >
-                      Logout
-                    </button>
+                    <SignOutButton>
+                      <button
+                        className="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
+                      >
+                        Logout
+                      </button>
+                    </SignOutButton>
                   </div>
                 </div>
               ) : (
                 <div className="flex items-center space-x-4">
-                  <Link
-                    href="/auth/login"
-                    className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 px-3 py-2 rounded-lg transition-colors"
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    href="/auth/register"
-                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors shadow-sm hover:shadow-md"
-                  >
-                    Register
-                  </Link>
+                  <SignInButton>
+                    <button className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 px-3 py-2 rounded-lg transition-colors">
+                      Login
+                    </button>
+                  </SignInButton>
+                  <SignUpButton>
+                    <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors shadow-sm hover:shadow-md">
+                      Register
+                    </button>
+                  </SignUpButton>
                 </div>
               )}
             </div>
@@ -166,7 +168,7 @@ export default function Navbar() {
             ))}
 
             {/* Mobile Auth Buttons */}
-            {isLoggedIn ? (
+            {isSignedIn ? (
               <>
                 <Link
                   href="/profile"
@@ -175,15 +177,14 @@ export default function Navbar() {
                 >
                   Profile
                 </Link>
-                <button
-                  onClick={() => {
-                    console.log("Logout clicked");
-                    setMenuAnim("out");
-                  }}
-                  className="block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                  Logout
-                </button>
+                <SignOutButton>
+                  <button
+                    className="block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    onClick={() => setMenuAnim("out")}
+                  >
+                    Logout
+                  </button>
+                </SignOutButton>
               </>
             ) : (
               <div className="space-y-2 pt-2">
