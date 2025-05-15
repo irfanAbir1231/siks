@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 
-export async function POST(request) {
+export async function POST(request: Request) {
     await connectDB();
     const body = await request.json();
     const newBlog = await Blog.create(body);

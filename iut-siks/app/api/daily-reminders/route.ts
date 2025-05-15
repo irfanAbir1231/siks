@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import DailyReminder from '@/models/DailyReminder';
 
-export async function POST(request) {
+export async function POST(request: Request) {
     await connectDB();
     const body = await request.json();
     const newDailyReminder = await DailyReminder.create(body);

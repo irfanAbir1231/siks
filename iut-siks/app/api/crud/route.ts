@@ -1,8 +1,8 @@
-import { connectDB } from '@/lib/mongodb'; // Adjust path if different
-import Crud from '@/models/Crud'; // Assuming you defined the model here
+import { connectDB } from '@/lib/mongodb';
+import Crud from '@/models/Crud';
 import { NextResponse } from 'next/server';
 
-export async function POST(req) {
+export async function POST(req: Request) {
     await connectDB();
     const data = await req.json();
     const newCrud = await Crud.create(data);
