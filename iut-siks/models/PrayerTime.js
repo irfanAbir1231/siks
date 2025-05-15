@@ -1,12 +1,11 @@
 import mongoose from 'mongoose';
 
 const PrayerTimeSchema = new mongoose.Schema({
-    fajr: { type: String, required: true },
-    dhuhr: { type: String, required: true },
-    asr: { type: String, required: true },
-    maghrib: { type: String, required: true },
-    isha: { type: String, required: true },
-    date: { type: Date, required: true },
+    Fajr: { type: String, required: true },
+    Dhuhr: { type: String, required: true },
+    Asr: { type: String, required: true },
+    Maghrib: { type: String, required: true },
+    Isha: { type: String, required: true },
 });
 
 export default mongoose.models.PrayerTime || mongoose.model('PrayerTime', PrayerTimeSchema);
