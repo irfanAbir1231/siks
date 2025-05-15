@@ -55,7 +55,15 @@ export default function EventsPage() {
                       {event.title}
                     </h2>
                     <p className="text-xs sm:text-sm text-green-600 dark:text-green-400 font-medium text-center">
-                      {event.date}
+                      {(() => {
+                        // Format date as MonthName Day, Year
+                        const d = new Date(event.date);
+                        if (isNaN(d.getTime())) return event.date;
+                        const month = d.toLocaleString('default', { month: 'long' });
+                        const day = d.getDate();
+                        const year = d.getFullYear();
+                        return `${month} ${day}, ${year}`;
+                      })()}
                     </p>
                   </div>
                   <p className="text-gray-600 dark:text-gray-300 mb-4 sm:mb-6 line-clamp-3 text-center text-sm sm:text-base flex-1">
