@@ -1,19 +1,7 @@
 "use client";
-import Link from "next/link";
+
 import { useEffect, useState } from "react";
-
-// interface BlogPost {
-//   id: number;
-//   title: string;
-//   slug: string;
-//   excerpt: string;
-//   author: string;
-//   date: string;
-// }
-
-// const blogPosts: BlogPost[] = [
-//   ...existing code...
-// ];
+import Link from "next/link";
 
 type BlogType = {
   id?: number;
@@ -36,12 +24,15 @@ export default function BlogHomePage() {
         if (!res.ok) throw new Error("Failed to fetch blogs");
         const data = await res.json();
         setBlogPosts(data.blogs || data); // support both {blogs:[]} and []
-      } catch (err) {
-        setError("Could not load blogs.");
+      } catch (error) {
+        setError(
+          error instanceof Error ? error.message : "Could not load blogs"
+        );
       } finally {
         setLoading(false);
       }
     }
+
     fetchBlogs();
   }, []);
 
@@ -52,9 +43,13 @@ export default function BlogHomePage() {
           Latest Blogs from IUT-SIKS
         </h1>
         {loading ? (
-          <div className="text-center text-gray-600 dark:text-gray-300">Loading blogs...</div>
+          <div className="text-center text-gray-600 dark:text-gray-300">
+            Loading blogs...
+          </div>
         ) : error ? (
-          <div className="text-center text-red-600 dark:text-red-400">{error}</div>
+          <div className="text-center text-red-600 dark:text-red-400">
+            {error}
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 w-full max-w-6xl mx-auto">
             {blogPosts.map((post, i) => (
@@ -72,15 +67,19 @@ export default function BlogHomePage() {
                   </p>
                   <div className="flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-3 sm:mb-4 gap-1 sm:gap-0">
                     <span>{post.author}</span>
-                    <span>{(() => {
-                      // Format date as DD MonthName, YYYY
-                      const d = new Date(post.date);
-                      if (isNaN(d.getTime())) return post.date;
-                      const day = d.getDate().toString().padStart(2, '0');
-                      const month = d.toLocaleString('default', { month: 'long' });
-                      const year = d.getFullYear();
-                      return `${day} ${month}, ${year}`;
-                    })()}</span>
+                    <span>
+                      {(() => {
+                        // Format date as DD MonthName, YYYY
+                        const d = new Date(post.date);
+                        if (isNaN(d.getTime())) return post.date;
+                        const day = d.getDate().toString().padStart(2, "0");
+                        const month = d.toLocaleString("default", {
+                          month: "long",
+                        });
+                        const year = d.getFullYear();
+                        return `${day} ${month}, ${year}`;
+                      })()}
+                    </span>
                   </div>
                   <Link
                     href={`/blogs/${post.slug}`}

@@ -22,12 +22,15 @@ export default function EventsPage() {
         if (!res.ok) throw new Error("Failed to fetch events");
         const data = await res.json();
         setEvents(data.events || data); // support both {events:[]} and []
-      } catch (err) {
-        setError("Could not load events.");
+      } catch (error) {
+        setError(
+          error instanceof Error ? error.message : "Could not load events"
+        );
       } finally {
         setLoading(false);
       }
     }
+
     fetchEvents();
   }, []);
 
@@ -38,9 +41,13 @@ export default function EventsPage() {
           Upcoming Events
         </h1>
         {loading ? (
-          <div className="text-center text-gray-600 dark:text-gray-300">Loading events...</div>
+          <div className="text-center text-gray-600 dark:text-gray-300">
+            Loading events...
+          </div>
         ) : error ? (
-          <div className="text-center text-red-600 dark:text-red-400">{error}</div>
+          <div className="text-center text-red-600 dark:text-red-400">
+            {error}
+          </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 w-full max-w-6xl mx-auto">
             {events.map((event, i) => (
@@ -59,7 +66,9 @@ export default function EventsPage() {
                         // Format date as MonthName Day, Year
                         const d = new Date(event.date);
                         if (isNaN(d.getTime())) return event.date;
-                        const month = d.toLocaleString('default', { month: 'long' });
+                        const month = d.toLocaleString("default", {
+                          month: "long",
+                        });
                         const day = d.getDate();
                         const year = d.getFullYear();
                         return `${month} ${day}, ${year}`;

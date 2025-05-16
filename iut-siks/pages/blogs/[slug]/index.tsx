@@ -1,13 +1,6 @@
-"use client";
-
 import { useState, useEffect } from "react";
-import { notFound } from "next/navigation";
-
-interface BlogPostPageProps {
-  params: {
-    slug: string;
-  };
-}
+import { useRouter } from "next/router";
+import type { NextPage } from "next";
 
 interface BlogPost {
   _id: string;
@@ -29,7 +22,10 @@ type Comment = {
 
 const initialComments: Comment[] = [];
 
-export default function BlogPost({ params }: BlogPostPageProps) {
+const BlogPostPage: NextPage = () => {
+  const router = useRouter();
+  const { slug } = router.query;
+
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -40,11 +36,14 @@ export default function BlogPost({ params }: BlogPostPageProps) {
 
   useEffect(() => {
     async function fetchBlogPost() {
+      if (!slug) return;
+
       try {
-        const res = await fetch(`/api/blogs/${params.slug}`);
+        const res = await fetch(`/api/blogs/${slug}`);
         if (!res.ok) {
           if (res.status === 404) {
-            notFound();
+            router.push("/404");
+            return;
           }
           throw new Error("Failed to fetch blog post");
         }
@@ -58,7 +57,7 @@ export default function BlogPost({ params }: BlogPostPageProps) {
     }
 
     fetchBlogPost();
-  }, [params.slug]);
+  }, [slug, router]);
 
   const handleLike = () => {
     setLikes(likes + 1);
@@ -105,7 +104,7 @@ export default function BlogPost({ params }: BlogPostPageProps) {
   }
 
   if (!post) {
-    notFound();
+    return null;
   }
 
   return (
@@ -226,4 +225,6 @@ export default function BlogPost({ params }: BlogPostPageProps) {
       </article>
     </div>
   );
-}
+};
+
+export default BlogPostPage;

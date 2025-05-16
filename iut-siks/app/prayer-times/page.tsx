@@ -2,19 +2,11 @@
 import { useEffect, useState } from "react";
 
 interface PrayerTime {
-  id: number;
+  id: string;
   name: string;
-  arabicName: string;
   time: string;
+  status: "upcoming" | "past" | "current";
 }
-
-const PRAYER_NAMES = [
-  { name: "Fajr", arabicName: "الفجر" },
-  { name: "Dhuhr", arabicName: "الظهر" },
-  { name: "Asr", arabicName: "العصر" },
-  { name: "Maghrib", arabicName: "المغرب" },
-  { name: "Isha", arabicName: "العشاء" },
-];
 
 export default function PrayerTimesPage() {
   const [prayerTimes, setPrayerTimes] = useState<PrayerTime[]>([]);
@@ -27,20 +19,16 @@ export default function PrayerTimesPage() {
         const res = await fetch("/api/prayer-times");
         if (!res.ok) throw new Error("Failed to fetch prayer times");
         const data = await res.json();
-        // Only update the time, keep names hardcoded
-        const times = (data.prayerTimes || data).map((item: any, idx: number) => ({
-          id: idx + 1,
-          name: PRAYER_NAMES[idx]?.name || `Prayer ${idx + 1}`,
-          arabicName: PRAYER_NAMES[idx]?.arabicName || "",
-          time: item.time,
-        }));
-        setPrayerTimes(times);
-      } catch (err) {
-        setError("Could not load prayer times.");
+        setPrayerTimes(data.prayerTimes || data);
+      } catch (error) {
+        setError(
+          error instanceof Error ? error.message : "Could not load prayer times"
+        );
       } finally {
         setLoading(false);
       }
     }
+
     fetchPrayerTimes();
   }, []);
 
@@ -54,9 +42,13 @@ export default function PrayerTimesPage() {
           {/* Prayer Times Grid */}
           <div className="divide-y divide-green-100 dark:divide-green-900/30">
             {loading ? (
-              <div className="text-center text-gray-600 dark:text-gray-300 p-6">Loading prayer times...</div>
+              <div className="text-center text-gray-600 dark:text-gray-300 p-6">
+                Loading prayer times...
+              </div>
             ) : error ? (
-              <div className="text-center text-red-600 dark:text-red-400 p-6">{error}</div>
+              <div className="text-center text-red-600 dark:text-red-400 p-6">
+                {error}
+              </div>
             ) : (
               prayerTimes.map((prayer, i) => (
                 <div
@@ -68,9 +60,6 @@ export default function PrayerTimesPage() {
                     <h2 className="text-lg sm:text-xl font-semibold text-green-800 dark:text-green-100 mb-1">
                       {prayer.name}
                     </h2>
-                    <p className="text-xs sm:text-sm text-green-600 dark:text-green-400 font-arabic">
-                      {prayer.arabicName}
-                    </p>
                   </div>
                   <div className="text-center sm:text-right">
                     <span className="text-lg sm:text-2xl font-semibold text-green-600 dark:text-green-400">

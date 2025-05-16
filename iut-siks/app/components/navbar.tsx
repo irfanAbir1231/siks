@@ -3,11 +3,13 @@
 import { useState, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SignInButton, SignUpButton, useAuth, useUser, SignOutButton } from '@clerk/nextjs';
-
-// Temporary auth state (replace with your auth solution)
-const isLoggedIn = false;
-const username = "Abdullah";
+import {
+  SignInButton,
+  SignUpButton,
+  useAuth,
+  useUser,
+  SignOutButton,
+} from "@clerk/nextjs";
 
 export default function Navbar() {
   const { isSignedIn } = useAuth();
@@ -30,7 +32,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="bg-white dark:bg-gray-900 shadow-lg sticky top-0 z-50 border-b border-green-100 dark:border-green-900">
+    <nav className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 fixed w-full z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo and Brand */}
@@ -77,9 +79,7 @@ export default function Navbar() {
                       Profile
                     </Link>
                     <SignOutButton>
-                      <button
-                        className="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
-                      >
+                      <button className="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30">
                         Logout
                       </button>
                     </SignOutButton>

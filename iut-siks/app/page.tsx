@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
@@ -28,12 +29,16 @@ export default function Home() {
         className="relative w-full flex flex-col items-center justify-center text-center py-16 md:py-24 px-2 sm:px-0 bg-gradient-to-br from-green-200/60 via-blue-200/40 to-transparent dark:from-green-900/40 dark:via-blue-900/30 dark:to-transparent overflow-hidden"
         style={{ minHeight: 400 }}
       >
-        <img
-          src="/hero-bg.jpg"
-          alt="IUT-SIKS"
-          className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none select-none z-0"
-          style={{ transform: `translateY(${offset}px) scale(1.08)` }}
-        />
+        <div className="absolute inset-0 w-full h-full">
+          <Image
+            src="/hero-bg.jpg"
+            alt="IUT-SIKS"
+            fill
+            className="object-cover opacity-20 pointer-events-none select-none"
+            style={{ transform: `translateY(${offset}px) scale(1.08)` }}
+            priority
+          />
+        </div>
         <div className="absolute inset-0 w-full h-full bg-white/10 dark:bg-gray-900/20 backdrop-blur-sm z-10" />
         <div className="relative z-20 flex flex-col items-center animate-fade-in-up w-full">
           <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white drop-shadow mb-3 md:mb-4 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-green-500 via-blue-500 to-green-400 animate-gradient-move break-words">
